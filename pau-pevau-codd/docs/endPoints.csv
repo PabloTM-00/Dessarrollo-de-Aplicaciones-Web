@@ -1,0 +1,14 @@
+﻿Actor;Comando o consulta;Microservicio(s);Recurso externo;Métodos;DTO;Comentario
+Vicerrectorado;- introducir información de centros (institutos) (CRUD;Gestión de estudiantes;/institutos,/institutos/{id};GET|POST, GET|PUT|DELETE;;Necesario?
+Responsable de sede;- consultar lista de estudiantes en sede;Gestión de estudiantes;/sedes/{idSede}/estudiantes;GET;;
+Vicerrectorado;- cargar listado de estudiantes con materias por sede;Gestión de estudiantes;/estudiantes/upload;POST;;
+Vicerrectorado;CRUD de estudiantes;Gestión de estudiantes;/estudiantes, /estudiantes/{idEstudiante};GET | POST, GET | PUT | DELETE;;
+;;;;;;
+;;;;;;
+Endpoints para este microservicio;;;;;;
+Actor;Comando o consulta;Microservicio(s);Recurso externo;Métodos;DTO;Comentario
+Vicerrectorado;CR  de institutos;Gestión de estudiantes;/institutos;GET | POST;;
+Vicerrectorado;RUD de institutos;Gestión de estudiantes;/institutos/{id};GET | PUT | DELETE;;
+Vicerrectorado, Responsable de sede puede consultar;CR de estudiantes;Gestión de estudiantes;/estudiantes[?sede={idSede}&convocatoria={idConv}];GET | POST;;
+Vicerrectorado;RUD de estudiantes;Gestión de estudiantes;/estudiantes/{idEstudiante};GET | PUT | DELETE;;
+Vicerrectorado;Subida de Excel o CSV de estudiantes;Gestión de estudiantes;/estudiantes/upload;POST;;

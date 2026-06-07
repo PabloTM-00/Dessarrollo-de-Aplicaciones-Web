@@ -1,0 +1,476 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /institutos/{idInstituto}:
+    get:
+      tags:
+      - controlador-institutos
+      description: Devuelve información de un instituto concreto
+      operationId: consultarInstituto
+      parameters:
+      - name: idInstituto
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Devolución correcta
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+        "404":
+          description: Instituto no encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+    put:
+      tags:
+      - controlador-institutos
+      description: Actualiza el instituto concreto
+      operationId: actualizarMateria
+      parameters:
+      - name: idInstituto
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instituto'
+        required: true
+      responses:
+        "200":
+          description: Actualización correcta
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+        "404":
+          description: Instituto no encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+    delete:
+      tags:
+      - controlador-institutos
+      description: Elimina un instituto concreto. Solo se puede eliminar si el instituto
+        no aparece asociado a un estudiante.
+      operationId: eliminarInstituto
+      parameters:
+      - name: idInstituto
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Eliminación correcta
+        "404":
+          description: Instituto no encontrada
+        "409":
+          description: El instituto no se puede eliminar
+        "403":
+          description: Acceso no autorizado
+  /estudiantes/{idEstudiante}:
+    get:
+      tags:
+      - controlador-estudiantes
+      description: Devuelve información de un estudiante concreto
+      operationId: consultarEstudiante
+      parameters:
+      - name: idEstudiante
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Devolución correcta
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "404":
+          description: Estudiante no encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+    put:
+      tags:
+      - controlador-estudiantes
+      description: 'Actualiza la información un/a estudiante. El atributo ''noEliminar''
+        solo puede actualizarse una vez de false a verdadero. '
+      operationId: actualizarEstudiante
+      parameters:
+      - name: idEstudiante
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstudianteNuevo'
+        required: true
+      responses:
+        "200":
+          description: Actualización correcta
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "404":
+          description: "Estudiante, instituto o materias no encontradas"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "409":
+          description: Ya hay otro estudiante con el mismo DNI
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+    delete:
+      tags:
+      - controlador-estudiantes
+      description: Elimina un/a estudiante concreto/a siempre que no haya sido marcado
+        como para 'no eliminar' por haber registrado otro servicio información sobre
+        el/la estudiante
+      operationId: eliminarEstudiante
+      parameters:
+      - name: idEstudiante
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Eliminación correcta
+        "404":
+          description: Estudiante no encontrado
+        "409":
+          description: El estudiante no se puede eliminar
+        "403":
+          description: Acceso no autorizado
+  /institutos:
+    get:
+      tags:
+      - controlador-institutos
+      description: Devuelve la lista de institutos
+      operationId: consultarInstitutos
+      responses:
+        "200":
+          description: Devolución correcta
+          content:
+            '*/*':
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instituto'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instituto'
+    post:
+      tags:
+      - controlador-institutos
+      description: Crea un nuevo instituto. Devuelve el instituto creado.
+      operationId: crearInstituto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Instituto'
+        required: true
+      responses:
+        "201":
+          description: El instituto se ha creado correctamente
+          headers:
+            Location:
+              description: URI del nuevo recurso
+              style: simple
+              schema:
+                type: string
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Instituto'
+  /estudiantes:
+    get:
+      tags:
+      - controlador-estudiantes
+      description: Devuelve la lista de estudiantes (totales o de una sede) de una
+        convocatoria.
+      operationId: consultarEstudiantes
+      parameters:
+      - name: idSede
+        in: query
+        description: Sede de la que se quiere consutlar los estudiantes
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: idConvocatoria
+        in: query
+        description: Si no se especifica se asume que es la actual
+        required: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Devolución correcta
+          content:
+            '*/*':
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/Estudiante'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/Estudiante'
+    post:
+      tags:
+      - controlador-estudiantes
+      description: Crea un nuevo estudiante.
+      operationId: crearEstudiante
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstudianteNuevo'
+        required: true
+      responses:
+        "201":
+          description: El estudiante se ha creado correctamente
+          headers:
+            Location:
+              description: URI del nuevo recurso
+              style: simple
+              schema:
+                type: string
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+        "409":
+          description: Ya hay un estudiante con el mismo DNI
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Estudiante'
+  /estudiantes/upload:
+    post:
+      tags:
+      - controlador-estudiantes
+      description: Sube un fichero CSV con la información de  los estudiantes para
+        importarla.
+      operationId: importarEstudiantes
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - ficheroEstudiantes
+              type: object
+              properties:
+                ficheroEstudiantes:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Los estudiantes se han creado correctamente. Devuelve la lista
+            de estudiantes importados y aquellos no importados.
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ImportacionEstudiantes'
+        "403":
+          description: Acceso no autorizado
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ImportacionEstudiantes'
+components:
+  schemas:
+    Instituto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        direccion1:
+          type: string
+        direccion2:
+          type: string
+        localidad:
+          type: string
+        codigoPostal:
+          type: integer
+          format: int32
+        pais:
+          type: string
+    EstudianteNuevo:
+      type: object
+      properties:
+        nombreCompleto:
+          $ref: '#/components/schemas/NombreCompleto'
+        dni:
+          type: string
+        telefono:
+          type: string
+        email:
+          type: string
+        materiasMatriculadas:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+        idInstituto:
+          type: integer
+          format: int64
+        idSede:
+          type: integer
+          format: int64
+        noEliminar:
+          type: boolean
+    NombreCompleto:
+      type: object
+      properties:
+        apellido1:
+          type: string
+        apellido2:
+          type: string
+        nombre:
+          type: string
+    Estudiante:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombreCompleto:
+          $ref: '#/components/schemas/NombreCompleto'
+        dni:
+          type: string
+        telefono:
+          type: string
+        email:
+          type: string
+        materiasMatriculadas:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Materia'
+        idSede:
+          type: integer
+          format: int64
+        instituto:
+          $ref: '#/components/schemas/Instituto'
+        noEliminar:
+          type: boolean
+    Materia:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+        eliminada:
+          type: boolean
+    ImportacionEstudiantes:
+      type: object
+      properties:
+        importados:
+          type: array
+          items:
+            $ref: '#/components/schemas/Estudiante'
+        noImportados:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProblemaImportacion'
+    ProblemaImportacion:
+      type: object
+      properties:
+        estudiante:
+          $ref: '#/components/schemas/Estudiante'
+        problemaImportacion:
+          type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

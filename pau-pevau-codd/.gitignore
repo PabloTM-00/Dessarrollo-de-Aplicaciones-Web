@@ -1,0 +1,48 @@
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Build tool folders
+.gradle/
+build/
+target/
+bin/
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# IDE - Eclipse
+.settings/
+.project
+.classpath
+.factorypath
+
+# IDE - VS Code
+.vscode/
+
+# Language Servers / Tools
+.metals/
+metals.sbt
+docs/alexNotes.md
+pevau/pevaudb.mv.db
+pevau/pevaudb.trace.db
+
+# Personal docs
+docs/alexDocs/
